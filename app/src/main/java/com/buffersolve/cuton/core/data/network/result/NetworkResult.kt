@@ -1,4 +1,4 @@
-package com.buffersolve.cuton.core.network.result
+package com.buffersolve.cuton.core.data.network.result
 
 import com.buffersolve.cuton.core.util.Result
 

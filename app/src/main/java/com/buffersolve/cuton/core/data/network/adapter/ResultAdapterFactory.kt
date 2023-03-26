@@ -1,4 +1,4 @@
-package com.buffersolve.cuton.core.network.adapter
+package com.buffersolve.cuton.core.data.network.adapter
 
 import com.buffersolve.cuton.core.util.Result
 import retrofit2.Call
