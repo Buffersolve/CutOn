@@ -1,7 +1,7 @@
-package com.project.hub.core.data.network.adapter
+package com.buffersolve.cuton.core.network.adapter
 
-import com.project.hub.core.data.network.result.NetworkResult
-import com.project.hub.core.util.Result
+import com.buffersolve.cuton.core.network.result.NetworkResult
+import com.buffersolve.cuton.core.util.Result
 import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback

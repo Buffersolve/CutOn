@@ -1,4 +1,4 @@
-package com.project.hub.core.util
+package com.buffersolve.cuton.core.util
 
 sealed class Result<out S, out E> {
     data class Success<out S>(val success: S) : Result<S, Nothing>()

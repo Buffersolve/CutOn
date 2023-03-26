@@ -1,4 +1,4 @@
-package com.project.hub.core.data.network.adapter
+package com.buffersolve.cuton.core.network.adapter
 
 import okhttp3.Request
 import retrofit2.Call

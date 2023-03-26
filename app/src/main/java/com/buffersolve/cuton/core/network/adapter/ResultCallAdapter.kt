@@ -1,6 +1,6 @@
-package com.project.hub.core.data.network.adapter
+package com.buffersolve.cuton.core.network.adapter
 
-import com.project.hub.core.data.network.result.NetworkResult
+import com.buffersolve.cuton.core.network.result.NetworkResult
 import retrofit2.Call
 import retrofit2.CallAdapter
 import java.lang.reflect.Type
