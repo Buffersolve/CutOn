@@ -2,9 +2,9 @@ package com.buffersolve.cuton.core.domain
 
 interface SessionManager {
 
-    fun saveRoute(route: String): Boolean
+    fun saveApiAddress(route: String): Boolean
 
-    fun getRoute(): String?
+    fun getApiAddress(): String
 
     fun getUserTokenOrNull(): String?
 

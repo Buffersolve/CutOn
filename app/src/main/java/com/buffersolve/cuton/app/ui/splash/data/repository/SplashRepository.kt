@@ -1,10 +1,8 @@
 package com.buffersolve.cuton.app.ui.splash.data.repository
 
-import android.util.Log
 import com.buffersolve.cuton.app.ui.splash.data.remote.api.SplashService
 import com.buffersolve.cuton.app.ui.splash.data.remote.model.RouteModel
 import com.buffersolve.cuton.core.data.network.result.NetworkResult
-import com.buffersolve.cuton.core.domain.AppInfoManager
 import com.buffersolve.cuton.core.domain.SessionManager
 import com.buffersolve.cuton.core.util.Result
 import com.buffersolve.cuton.core.util.onFailure
@@ -19,7 +17,7 @@ class SplashRepository @Inject constructor(
         val response = splashService.getRoute(appName, v)
             .onFailure { return it }
 
-        sessionManager.saveRoute(response.route)
+        sessionManager.saveApiAddress(response.route)
 //        Log.d("SaveRoute", "Route: ${sessionManager.getRoute()}")
 
         return Result.Success(response)

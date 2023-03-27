@@ -7,13 +7,14 @@ import javax.inject.Inject
 class SessionManagerImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : SessionManager {
-    override fun saveRoute(route: String): Boolean {
-        sharedPreferences.saveRoute(route)
+
+    override fun saveApiAddress(route: String): Boolean {
+        sharedPreferences.saveApiAddress(route)
         return !getUserTokenOrNull().isNullOrEmpty()
     }
 
-    override fun getRoute(): String? {
-        return sharedPreferences.getRoute()
+    override fun getApiAddress(): String {
+        return sharedPreferences.getApiAddress()
     }
 
     override fun getUserTokenOrNull(): String? {

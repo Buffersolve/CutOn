@@ -2,8 +2,12 @@ package com.buffersolve.cuton.core.data.local.sharedpref
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.util.JsonReader
+import com.buffersolve.cuton.app.util.Configs
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.io.StringReader
 import javax.inject.Inject
 
 class SharedPreferences @Inject constructor(
@@ -14,17 +18,14 @@ class SharedPreferences @Inject constructor(
     private val gson = Gson()
 
     // Route
-    fun saveRoute(route: String) {
+    fun saveApiAddress(route: String) {
         sharedPreferences.edit()
-            .putString(ROUTE, gson.toJson(route))
+            .putString(api_address, route)
             .apply()
     }
 
-    fun getRoute(): String? {
-        return gson.fromJson(
-            sharedPreferences.getString(ROUTE, null),
-            String::class.java
-        )
+    fun getApiAddress(): String {
+        return sharedPreferences.getString(api_address, Configs.api_address) ?: Configs.api_address
     }
 
     // Token
@@ -71,7 +72,7 @@ class SharedPreferences @Inject constructor(
     }
 
     companion object {
-        private const val ROUTE = "ROUTE"
+        private const val api_address = "api_address"
 
         private const val SHARED_PREFERENCES = "SHARED_PREFERENCES"
         private const val TOKEN_KEY = "TOKEN_KEY"

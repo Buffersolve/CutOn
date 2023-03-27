@@ -24,8 +24,6 @@ class CutOnViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Flow
-//    private val _networkState = MutableSharedFlow<State>(replay = 1)
-//    val networkState: SharedFlow<State> = _networkState.asSharedFlow()
     private val _networkState = MutableStateFlow(State.Unavailable)
     val networkState: StateFlow<State> = _networkState.asStateFlow()
 
@@ -45,11 +43,15 @@ class CutOnViewModel @Inject constructor(
         Log.d("SaveAppNameAndVersion", "AppName: ${appInfoManager.getVersion()}")
     }
 
-    fun saveRoute(appName: String, v: Int) = viewModelScope.launch(Dispatchers.IO) {
+    fun saveInitApiAddress(apiAddress: String) {
+        sessionManager.saveApiAddress(apiAddress)
+    }
+
+    fun saveSecondApiAddress(appName: String, v: Int) = viewModelScope.launch(Dispatchers.IO) {
         repository.getRoute(appName, v).onResult(
             onSuccess = {
-                sessionManager.saveRoute(it.success.toString())
-                val res = sessionManager.getRoute()
+                sessionManager.saveApiAddress(it.success.route)
+                val res = sessionManager.getApiAddress()
                 Log.d("SaveRoute", "Route: $res")
             },
             onFailure = {
@@ -57,5 +59,7 @@ class CutOnViewModel @Inject constructor(
             }
         )
     }
+
+
 
 }

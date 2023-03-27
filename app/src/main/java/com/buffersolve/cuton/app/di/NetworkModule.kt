@@ -1,6 +1,7 @@
 package com.buffersolve.cuton.app.di
 
 import com.buffersolve.cuton.core.data.network.adapter.ResultAdapterFactory
+import com.buffersolve.cuton.core.domain.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,12 +16,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val URL = "https://cr-test-ribu2uaqea-ey.a.run.app/"
-
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return createRetrofit(URL, okHttpClient).build()
+    fun provideRetrofit(sessionManager: SessionManager, okHttpClient: OkHttpClient): Retrofit {
+        return createRetrofit(sessionManager.getApiAddress(), okHttpClient).build()
     }
 
     @Provides
