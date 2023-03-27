@@ -6,4 +6,6 @@ interface SessionManager {
 
     fun saveUserToken(token: String): Boolean
 
+    fun clearUserToken(): Boolean
+
 }

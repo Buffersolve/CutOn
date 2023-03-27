@@ -27,10 +27,40 @@ class SharedPreferences @Inject constructor(
         )
     }
 
+    fun clearUserToken(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    /*
+    App Name and Version
+    */
+
+    fun saveAppName(appName: String) {
+        sharedPreferences.edit()
+            .putString(APP_NAME, appName)
+            .apply()
+    }
+
+    fun saveVersion(v: Int) {
+        sharedPreferences.edit()
+            .putInt(APP_VERSION, v)
+            .apply()
+    }
+
+    fun getAppName(): String? {
+        return sharedPreferences.getString(APP_NAME, null)
+    }
+
+    fun getVersion(): Int {
+        return sharedPreferences.getInt(APP_VERSION, 0)
+
+    }
 
     companion object {
-        const val SHARED_PREFERENCES = "SHARED_PREFERENCES"
-        const val TOKEN_KEY = "TOKEN_KEY"
+        private const val SHARED_PREFERENCES = "SHARED_PREFERENCES"
+        private const val TOKEN_KEY = "TOKEN_KEY"
+        private const val APP_NAME = "APP_NAME"
+        private const val APP_VERSION = "APP_VERSION"
     }
 
 }

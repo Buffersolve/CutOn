@@ -3,7 +3,9 @@ package com.buffersolve.cuton.app.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.buffersolve.cuton.core.domain.AppInfoManager
 import com.buffersolve.cuton.core.domain.NetworkConnectivityState
+import com.buffersolve.cuton.core.domain.SessionManager
 import com.buffersolve.cuton.core.domain.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -12,7 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CutOnViewModel @Inject constructor(
-    private val networkConnectivityState: NetworkConnectivityState
+    private val networkConnectivityState: NetworkConnectivityState,
+    private val sessionManager: SessionManager,
+    private val appInfoManager: AppInfoManager,
 ) : ViewModel() {
 
     // Flow
@@ -28,6 +32,13 @@ class CutOnViewModel @Inject constructor(
             Log.wtf("Connectivity111", it.toString())
             Log.wtf("Connectivity111", networkState.value.toString())
         }.launchIn(scope = viewModelScope)
+    }
+
+    fun saveAppNameAndVersion(appName: String, v: Int) {
+        appInfoManager.saveAppName(appName)
+        appInfoManager.saveVersion(v)
+        Log.d("SaveAppNameAndVersion", "AppName: ${appInfoManager.getAppName()}")
+        Log.d("SaveAppNameAndVersion", "AppName: ${appInfoManager.getVersion()}")
     }
 
 }

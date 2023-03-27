@@ -20,6 +20,7 @@ class CutOnActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCutonBinding
     private lateinit var dialog: AlertDialog
+
     private val viewModel: CutOnViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +44,9 @@ class CutOnActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            // Save App Name and Version
+            viewModel.saveAppNameAndVersion(appName, v)
 
         }
 

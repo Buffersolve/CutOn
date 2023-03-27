@@ -9,11 +9,16 @@ class SessionManagerImpl @Inject constructor(
 ) : SessionManager {
 
     override fun getUserTokenOrNull(): String? {
-        return null
+        return sharedPreferences.getToken()
     }
 
     override fun saveUserToken(token: String): Boolean {
-        return true
+        sharedPreferences.saveToken(token)
+        return !getUserTokenOrNull().isNullOrEmpty()
+    }
+
+    override fun clearUserToken(): Boolean {
+        TODO("Not yet implemented")
     }
 
 }

@@ -22,6 +22,7 @@ class NetworkConnectivityStateImpl @Inject constructor(
         val networkStatus = callbackFlow<State> {
 
             val networkStatusCallback = object : ConnectivityManager.NetworkCallback() {
+
                 override fun onUnavailable() {
                     trySend(State.Unavailable).isSuccess
                 }
