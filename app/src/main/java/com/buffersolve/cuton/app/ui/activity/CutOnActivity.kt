@@ -1,4 +1,4 @@
-package com.buffersolve.cuton.app.ui
+package com.buffersolve.cuton.app.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -54,6 +54,8 @@ class CutOnActivity : AppCompatActivity() {
         binding = ActivityCutonBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
+
+        viewModel.saveRoute(appName, v)
 
     }
 

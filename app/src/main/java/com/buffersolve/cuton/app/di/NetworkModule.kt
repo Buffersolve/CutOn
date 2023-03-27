@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val URL = "https://cr-test-ribu2uaqea-ey.a.run.app/routes/"
+    private const val URL = "https://cr-test-ribu2uaqea-ey.a.run.app/"
 
     @Provides
     @Singleton

@@ -13,7 +13,21 @@ class SharedPreferences @Inject constructor(
     private val sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE)
     private val gson = Gson()
 
+    // Route
+    fun saveRoute(route: String) {
+        sharedPreferences.edit()
+            .putString(ROUTE, gson.toJson(route))
+            .apply()
+    }
 
+    fun getRoute(): String? {
+        return gson.fromJson(
+            sharedPreferences.getString(ROUTE, null),
+            String::class.java
+        )
+    }
+
+    // Token
     fun saveToken(token: String) {
         sharedPreferences.edit()
             .putString(TOKEN_KEY, gson.toJson(token))
@@ -57,8 +71,11 @@ class SharedPreferences @Inject constructor(
     }
 
     companion object {
+        private const val ROUTE = "ROUTE"
+
         private const val SHARED_PREFERENCES = "SHARED_PREFERENCES"
         private const val TOKEN_KEY = "TOKEN_KEY"
+
         private const val APP_NAME = "APP_NAME"
         private const val APP_VERSION = "APP_VERSION"
     }
