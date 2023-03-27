@@ -3,10 +3,11 @@ package com.buffersolve.cuton.core.data.local.sharedpref
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import com.google.gson.Gson
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class SharedPreferences @Inject constructor(
-    private val context: Context
+    @ApplicationContext private val context: Context
 ) {
 
     private val sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE)

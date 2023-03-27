@@ -1,4 +1,4 @@
-package com.buffersolve.cuton.app
+package com.buffersolve.cuton.app.application
 
 import android.app.Application
 import com.google.android.material.color.DynamicColors
