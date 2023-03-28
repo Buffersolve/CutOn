@@ -25,7 +25,7 @@ class SharedPreferences @Inject constructor(
     }
 
     fun getApiAddress(): String {
-        return sharedPreferences.getString(api_address, Configs.api_address) ?: Configs.api_address
+        return sharedPreferences.getString(api_address, null) ?: ""
     }
 
     // Token

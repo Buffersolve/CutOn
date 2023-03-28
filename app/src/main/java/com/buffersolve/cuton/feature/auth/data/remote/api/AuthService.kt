@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class AuthService @Inject constructor(
-    private val retrofit: Retrofit
+    @Named("auth") private val retrofit: Retrofit
 ) {
 
     private val authApi: AuthApi by lazy { retrofit.create(AuthApi::class.java) }

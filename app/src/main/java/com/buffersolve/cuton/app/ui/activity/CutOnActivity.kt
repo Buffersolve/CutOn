@@ -9,12 +9,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.buffersolve.cuton.R
-import com.buffersolve.cuton.app.util.Configs
 import com.buffersolve.cuton.core.domain.State
 import com.buffersolve.cuton.databinding.ActivityCutonBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class CutOnActivity : AppCompatActivity() {
@@ -44,18 +43,17 @@ class CutOnActivity : AppCompatActivity() {
                         }
                     }
                 }
+
             }
 
             // Save App Name and Version
             viewModel.saveAppNameAndVersion(appName, v)
 
-            // Init api_address
-            viewModel.saveInitApiAddress(Configs.api_address)
-
             // Second api_address
             viewModel.saveSecondApiAddress(appName, v)
 
         }
+
 
         // Binding
         binding = ActivityCutonBinding.inflate(layoutInflater).also {
@@ -66,14 +64,16 @@ class CutOnActivity : AppCompatActivity() {
     }
 
     private fun dialogWithProgress(): AlertDialog {
-        val builder = MaterialAlertDialogBuilder(this)
-        val dialogView = layoutInflater.inflate(R.layout.progress_dialog_layout, null)
-        builder.setView(dialogView)
-        builder.setTitle("No internet")
-        dialog = builder.show()
-        dialog.setCancelable(false)
-        val window = dialog.window
-        window?.setLayout(520, 920)
+        val dialogView =
+            layoutInflater.inflate(R.layout.progress_dialog_layout, binding.root, false)
+        val builder = MaterialAlertDialogBuilder(this).apply {
+            setView(dialogView)
+            setTitle("No internet")
+        }
+        dialog = builder.show().apply {
+            setCancelable(false)
+            window?.setLayout(520, 920)
+        }
 
         return dialog
     }

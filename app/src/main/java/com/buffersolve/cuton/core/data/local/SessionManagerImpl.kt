@@ -10,7 +10,7 @@ class SessionManagerImpl @Inject constructor(
 
     override fun saveApiAddress(route: String): Boolean {
         sharedPreferences.saveApiAddress(route)
-        return !getUserTokenOrNull().isNullOrEmpty()
+        return getApiAddress().isNotEmpty()
     }
 
     override fun getApiAddress(): String {
