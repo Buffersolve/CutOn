@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.3"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiEmail"
+        android:id="@+id/tiPhone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
@@ -35,10 +35,10 @@
         app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium" >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tieEmail"
+            android:id="@+id/tiePhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
+            android:inputType="phone" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +53,7 @@
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tiEmail"
+        app:layout_constraintTop_toBottomOf="@id/tiPhone"
         app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium" >
 
         <com.google.android.material.textfield.TextInputEditText

@@ -54,7 +54,6 @@ class CutOnActivity : AppCompatActivity() {
 
         }
 
-
         // Binding
         binding = ActivityCutonBinding.inflate(layoutInflater).also {
             setContentView(it.root)
