@@ -17,10 +17,16 @@ class SplashRepository @Inject constructor(
         val response = splashService.getRoute(appName, v)
             .onFailure { return it }
 
+        // Save in SP
         sessionManager.saveApiAddress(response.route)
 //        Log.d("SaveRoute", "Route: ${sessionManager.getRoute()}")
 
         return Result.Success(response)
+    }
+
+    fun saveRoute(route: String) : Boolean {
+        sessionManager.saveApiAddress(route)
+        return true
     }
 
 }

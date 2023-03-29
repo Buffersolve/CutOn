@@ -26,9 +26,18 @@ class CutOnViewModel @Inject constructor(
     private val repository: SplashRepository,
 ) : ViewModel() {
 
+//    init {
+//        while (true) {
+//            Log.d("SESSIONMANAGER", sessionManager.getApiAddress())
+//        }
+//    }
+
     // Flow
     private val _networkState = MutableStateFlow(State.Unavailable)
     val networkState: StateFlow<State> = _networkState.asStateFlow()
+
+    private val _route = MutableSharedFlow<String>(replay = 1)
+    val route: SharedFlow<String> = _route.asSharedFlow()
 
     fun connectivity() = viewModelScope.launch {
         networkConnectivityState.requestNetworkStatus().onEach {
@@ -41,10 +50,15 @@ class CutOnViewModel @Inject constructor(
         appInfoManager.saveVersion(v)
     }
 
+    fun getSecondApiAddress(route: String) = viewModelScope.launch(Dispatchers.IO) {
+
+    }
+
     fun saveSecondApiAddress(appName: String, v: Int) = viewModelScope.launch(Dispatchers.IO) {
         repository.getRoute(appName, v).onResult(
             onSuccess = {
-                sessionManager.saveApiAddress(it.success.route)
+
+//                sessionManager.saveApiAddress(it.success.route)
             },
             onFailure = {
                 Log.d("SaveRoute", "Error: $it")

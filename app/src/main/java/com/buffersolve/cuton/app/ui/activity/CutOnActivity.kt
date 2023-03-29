@@ -9,6 +9,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.buffersolve.cuton.R
+import com.buffersolve.cuton.app.util.Configs.appName
+import com.buffersolve.cuton.app.util.Configs.v
 import com.buffersolve.cuton.core.domain.State
 import com.buffersolve.cuton.databinding.ActivityCutonBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -26,11 +28,18 @@ class CutOnActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Save App Name and Version
+        viewModel.saveAppNameAndVersion(appName, v)
+
+//        // Second api_address
+//        viewModel.saveSecondApiAddress(appName, v)
+
         // Check Network State
         viewModel.connectivity()
 
         // Splash Screen
         installSplashScreen().apply {
+
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.CREATED) {
                     viewModel.networkState.collect { state ->
@@ -43,14 +52,15 @@ class CutOnActivity : AppCompatActivity() {
                         }
                     }
                 }
-
             }
 
-            // Save App Name and Version
-            viewModel.saveAppNameAndVersion(appName, v)
 
-            // Second api_address
-            viewModel.saveSecondApiAddress(appName, v)
+
+//            // Save App Name and Version
+//            viewModel.saveAppNameAndVersion(appName, v)
+//
+//            // Second api_address
+//            viewModel.saveSecondApiAddress(appName, v)
 
         }
 
@@ -77,9 +87,4 @@ class CutOnActivity : AppCompatActivity() {
         return dialog
     }
 
-
-    companion object {
-        const val appName: String = "cuton"
-        const val v: Int = 36
-    }
 }

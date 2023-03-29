@@ -1,5 +1,6 @@
 package com.buffersolve.cuton.feature.auth.data.repository
 
+import android.util.Log
 import com.buffersolve.cuton.core.data.network.result.NetworkResult
 import com.buffersolve.cuton.core.domain.SessionManager
 import com.buffersolve.cuton.core.util.onFailure
@@ -27,6 +28,9 @@ class AuthRepository @Inject constructor(
 
         // saveToken
         sessionManager.saveUserToken(loginResponse.token)
+
+        //Log
+//        sessionManager.getUserTokenOrNull()?.let { Log.d("CHECKTOKENRES", it) }
 
         return Result.Success(Unit)
     }

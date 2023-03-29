@@ -2,6 +2,7 @@ package com.buffersolve.cuton.feature.auth.ui.login
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.buffersolve.cuton.R
+import com.buffersolve.cuton.app.util.Configs.appName
+import com.buffersolve.cuton.app.util.Configs.v
+import com.buffersolve.cuton.core.domain.State
 import com.buffersolve.cuton.databinding.FragmentLoginBinding
 import com.buffersolve.cuton.feature.auth.data.remote.api.models.LoginModel
 import com.buffersolve.cuton.feature.auth.ui.login.state.LoginState
@@ -19,6 +23,7 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -36,11 +41,36 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // v
-        viewModel.appVersionValidate()
+        // Second api_address
+//        viewModel.saveSecondApiAddress(appName, v)
+
+        // Check Network State
+        viewModel.connectivity()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+
+                viewModel.networkState.collect { state ->
+                    Log.d("STATETAG", "onViewCreated: $state")
+                    if (state == State.Available) {
+
+
+                        viewModel.saveSecondApiAddress(appName, v)
+
+                        // v
+//                        delay(1000)
+                        viewModel.appVersionValidate()
+                    } else {
+                        // Wait for network
+                    }
+                }
+
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+
                 viewModel.versionState.collect { state ->
                     when (state) {
                         0 -> binding.tvAppVersion.text = getString(R.string.version_answer_0)
@@ -67,7 +97,7 @@ class LoginFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.loginState.collect { state ->
                     when (state) {
                         is LoginState.Error -> {

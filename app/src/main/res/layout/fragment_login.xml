@@ -77,6 +77,15 @@
         app:layout_constraintTop_toBottomOf="@id/tiPass"
         app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium" />
 
+    <ProgressBar
+        android:id="@+id/progressAppVersion"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        app:layout_constraintStart_toStartOf="@id/btnLogin"
+        app:layout_constraintEnd_toEndOf="@id/btnLogin" />
+
     <TextView
         android:id="@+id/tvAppVersion"
         android:layout_width="0dp"
