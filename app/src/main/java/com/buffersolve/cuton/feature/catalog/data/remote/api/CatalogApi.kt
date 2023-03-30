@@ -1,8 +1,7 @@
 package com.buffersolve.cuton.feature.catalog.data.remote.api
 
 import com.buffersolve.cuton.core.data.network.result.NetworkResult
-import com.buffersolve.cuton.feature.catalog.data.remote.api.models.CatalogResponseModel
-import com.google.gson.reflect.TypeToken
+import com.buffersolve.cuton.feature.catalog.data.remote.api.models.dto.CatalogResponseDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,6 +13,6 @@ interface CatalogApi {
         @Query("token")
         token: String,
 
-        ): NetworkResult<CatalogResponseModel>
+        ): NetworkResult<CatalogResponseDTO>
 
 }

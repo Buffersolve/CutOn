@@ -1,7 +1,6 @@
-package com.buffersolve.cuton.feature.home.ui
+package com.buffersolve.cuton.feature.catalog.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,18 +9,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.buffersolve.cuton.databinding.FragmentHomeBinding
-import com.buffersolve.cuton.feature.home.ui.adapter.HomeAdapter
-import com.buffersolve.cuton.feature.home.ui.state.ItemState
+import androidx.recyclerview.widget.GridLayoutManager
+import com.buffersolve.cuton.databinding.FragmentCatalogBinding
+import com.buffersolve.cuton.feature.catalog.ui.adapter.CatalogAdapter
+import com.buffersolve.cuton.feature.catalog.ui.state.HomeState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class CatalogFragment : Fragment() {
 
-    private val binding: FragmentHomeBinding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
-    private val adapter by lazy { HomeAdapter() }
-    private val viewModel: HomeViewModel by viewModels()
+    private val binding: FragmentCatalogBinding by lazy { FragmentCatalogBinding.inflate(layoutInflater) }
+    private val viewModel: CatalogViewModel by viewModels()
+    private val adapter by lazy { CatalogAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,52 +31,44 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Get User Info
-        viewModel.getUserInfo()
-
-        // Get Home Menu Items
-        viewModel.getHomeMenuItems()
+        // Get Catalog
+        viewModel.getCatalog()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.itemState.collect { state ->
+                viewModel.catalogState.collect { state ->
                     when (state) {
-                        is ItemState.Loading -> {
+                        is HomeState.Loading -> {
                             // Show Loading
                             binding.progressBar.visibility = View.VISIBLE
                         }
-                        is ItemState.Success -> {
-                            // Hide Loading
-//                            adapter.submitList(state.list)
+                        is HomeState.Success -> {
                             with(binding) {
 
                                 // RV adapter
                                 recyclerView.adapter = adapter
-                                adapter.list = listOf(state.answer.items)
+                                recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
+                                // Set Data
+                                adapter.list = state.answer
 
-//                                recyclerView.adapter = HomeAdapter(listOf(state.answer.items))
+                                // Hide Loading
                                 progressBar.visibility = View.GONE
                             }
 
                         }
-                        is ItemState.Error -> {
+                        is HomeState.Error -> {
                             // Hide Loading
-                            // Show Error
+                            binding.progressBar.visibility = View.GONE
                         }
                     }
+
+
                 }
             }
         }
 
-        // RV click listener
-        adapter.setOnItemClickListener {
-            Log.d("TAGCLICKLISTENER", "onViewCreated")
-        }
     }
 
-//    private fun initRV() {
-//        binding.recyclerView.adapter = adapter
-//    }
 
 }
