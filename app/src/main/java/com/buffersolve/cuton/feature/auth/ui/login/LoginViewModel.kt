@@ -21,7 +21,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val networkConnectivityState: NetworkConnectivityState,
     private val appInfoManager: AppInfoManager,
-    private val repository: SplashRepository,
+    private val repository: SplashRepository, // TODO change to AuthRepository
     private val authRepository: AuthRepository,
 ) : ViewModel() {
 
