@@ -20,12 +20,21 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="match_parent"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:text="TextView"
             android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon_view"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="8dp"
+            android:layout_gravity="center_vertical"
+            android:tint="#4CAF50"
+            android:src="@drawable/arrow_forward" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
