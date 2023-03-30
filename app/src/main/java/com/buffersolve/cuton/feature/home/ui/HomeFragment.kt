@@ -1,6 +1,7 @@
 package com.buffersolve.cuton.feature.home.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment() {
 
     private val binding: FragmentHomeBinding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
-//    private val adapter by lazy { HomeAdapter() }
+    private val adapter by lazy { HomeAdapter() }
 
     private val viewModel: HomeViewModel by viewModels()
 //    private lateinit var dialog: AlertDialog
@@ -54,7 +55,13 @@ class HomeFragment : Fragment() {
                             // Hide Loading
 //                            adapter.submitList(state.list)
                             with(binding) {
-                                recyclerView.adapter = HomeAdapter(listOf(state.answer.items))
+
+                                // RV adapter
+                                recyclerView.adapter = adapter
+                                adapter.list = listOf(state.answer.items)
+
+
+//                                recyclerView.adapter = HomeAdapter(listOf(state.answer.items))
                                 progressBar.visibility = View.GONE
                             }
 
@@ -68,7 +75,10 @@ class HomeFragment : Fragment() {
             }
         }
 
-
+        // RV click listener
+        adapter.setOnItemClickListener {
+            Log.d("TAGCLICKLISTENER", "onViewCreated")
+        }
     }
 
 //    private fun initRV() {

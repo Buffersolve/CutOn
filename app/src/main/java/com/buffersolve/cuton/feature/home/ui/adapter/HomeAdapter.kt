@@ -8,7 +8,6 @@ import com.buffersolve.cuton.feature.home.data.remote.api.models.Items
 import com.bumptech.glide.Glide
 
 class HomeAdapter(
-    private val list: List<Items>
 ) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
 //    val list = listOf(
@@ -23,6 +22,13 @@ class HomeAdapter(
 //            "Каталог брендів"
 //        )
 //    )
+
+    var list: List<Items> = emptyList()
+
+
+//        private var itemClickListener: ItemClickListener? = null
+//    var onItemClick: ((Items) -> Unit)? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val binding = HomeRvItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -41,14 +47,40 @@ class HomeAdapter(
         fun bind() {
             binding.apply {
 
+                // Text
                 textView.text = list[bindingAdapterPosition].itemName
 
                 // Img
                 Glide.with(imageView.context)
                     .load(list[bindingAdapterPosition].itemImage)
                     .into(imageView)
+
+                // Click Listener
+                root.setOnClickListener {
+                    onItemClickListener?.invoke(list[bindingAdapterPosition])
+                }
             }
+
+//            itemView.setOnClickListener {
+//                itemClickListener?.invoke(bindingAdapterPosition)
+//            }
+
         }
 
     }
+
+    // Click Listener
+    private var onItemClickListener: ((Items) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Items) -> Unit) {
+        onItemClickListener = listener
+    }
+
+//    fun setItemClickListener(listener: ItemClickListener) {
+//        this.itemClickListener = listener
+//    }
+
+
 }
+
+//typealias ItemClickListener = (position: Int) -> Unit
