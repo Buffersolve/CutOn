@@ -10,8 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
+import com.buffersolve.cuton.R
 import com.buffersolve.cuton.databinding.FragmentHomeBinding
-import com.buffersolve.cuton.feature.home.data.remote.api.models.Items
 import com.buffersolve.cuton.feature.home.ui.adapter.HomeAdapter
 import com.buffersolve.cuton.feature.home.ui.state.ItemState
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,10 +23,7 @@ class HomeFragment : Fragment() {
 
     private val binding: FragmentHomeBinding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
     private val adapter by lazy { HomeAdapter() }
-
     private val viewModel: HomeViewModel by viewModels()
-//    private lateinit var dialog: AlertDialog
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,8 +32,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        initRV()
 
         // Get User Info
         viewModel.getUserInfo()
@@ -61,8 +57,9 @@ class HomeFragment : Fragment() {
                                 adapter.list = listOf(state.answer.items)
 
 
-//                                recyclerView.adapter = HomeAdapter(listOf(state.answer.items))
+                                // Hide Loading
                                 progressBar.visibility = View.GONE
+
                             }
 
                         }
@@ -77,7 +74,13 @@ class HomeFragment : Fragment() {
 
         // RV click listener
         adapter.setOnItemClickListener {
-            Log.d("TAGCLICKLISTENER", "onViewCreated")
+
+            // Navigate to CatalogFragment
+            val navController = Navigation.findNavController(view)
+            navController.navigate(
+                R.id.action_homeFragment_to_catalogFragment
+            )
+
         }
     }
 
