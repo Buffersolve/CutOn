@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
+import com.buffersolve.cuton.R
 import com.buffersolve.cuton.databinding.FragmentHomeBinding
 import com.buffersolve.cuton.feature.home.ui.adapter.HomeAdapter
 import com.buffersolve.cuton.feature.home.ui.state.ItemState
@@ -55,8 +57,9 @@ class HomeFragment : Fragment() {
                                 adapter.list = listOf(state.answer.items)
 
 
-//                                recyclerView.adapter = HomeAdapter(listOf(state.answer.items))
+                                // Hide Loading
                                 progressBar.visibility = View.GONE
+
                             }
 
                         }
@@ -71,7 +74,13 @@ class HomeFragment : Fragment() {
 
         // RV click listener
         adapter.setOnItemClickListener {
-            Log.d("TAGCLICKLISTENER", "onViewCreated")
+
+            // Navigate to CatalogFragment
+            val navController = Navigation.findNavController(view)
+            navController.navigate(
+                R.id.action_homeFragment_to_catalogFragment
+            )
+
         }
     }
 
