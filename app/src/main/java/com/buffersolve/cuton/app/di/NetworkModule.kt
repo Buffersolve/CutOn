@@ -80,6 +80,20 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @Named ("logoutRetrofit")
+    fun provideLogoutRetrofit(
+        sessionManager: SessionManager,
+        okHttpClient: OkHttpClient
+    ): Retrofit {
+        return if (sessionManager.getApiAddress().isNotEmpty()) {
+            createRetrofit(sessionManager.getApiAddress(), okHttpClient).build()
+        } else {
+            createRetrofit(init_api_address, okHttpClient).build()
+        }
+    }
+
+    @Provides
+    @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(createLoggingInterceptor())
