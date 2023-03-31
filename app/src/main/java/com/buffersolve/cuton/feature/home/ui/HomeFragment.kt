@@ -2,10 +2,12 @@ package com.buffersolve.cuton.feature.home.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -33,6 +35,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Toolbar
+        setupMenu()
+
         // Get User Info
         viewModel.getUserInfo()
 
@@ -59,9 +64,7 @@ class HomeFragment : Fragment() {
 
                                 // Hide Loading
                                 progressBar.visibility = View.GONE
-
                             }
-
                         }
                         is ItemState.Error -> {
                             // Hide Loading
@@ -82,10 +85,40 @@ class HomeFragment : Fragment() {
             )
 
         }
+
     }
 
-//    private fun initRV() {
-//        binding.recyclerView.adapter = adapter
-//    }
+    // Toolbar
+    private fun setupMenu() {
+
+        // Left button
+        val toolbar = binding.topAppBar
+        toolbar.setNavigationOnClickListener {
+            Log.d("onMenuItemSelected", "onMenuItemSelected: ")
+
+        }
+
+        // Right button
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.tool_bar_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.app_bar_user -> {
+                        // User Info
+                        viewModel.getUserInfo()
+                        true
+                    }
+                    else -> false
+                }
+
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+    }
 
 }
