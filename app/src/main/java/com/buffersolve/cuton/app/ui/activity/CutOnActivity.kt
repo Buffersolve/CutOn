@@ -2,6 +2,7 @@ package com.buffersolve.cuton.app.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.window.SplashScreen
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -15,6 +16,7 @@ import com.buffersolve.cuton.app.util.Configs.v
 import com.buffersolve.cuton.core.domain.State
 import com.buffersolve.cuton.databinding.ActivityCutonBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.onEach
@@ -30,21 +32,17 @@ class CutOnActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Save App Name and Version
-        viewModel.saveAppNameAndVersion(appName, v)
-
-//        // Second init_api_address
-//        viewModel.saveSecondApiAddress(appName, v)
-
-        // init_api_address
-//        viewModel.getApiAddress(appName, v)
-
-
-        // Check Network State
-//        viewModel.connectivity()
-
         // Splash Screen
         installSplashScreen().apply {
+
+            // Save App Name and Version
+            viewModel.saveAppNameAndVersion(appName, v)
+
+            // Check Network State
+            viewModel.connectivity()
+
+            // Get Api Address
+            viewModel.getApiAddress(appName, v)
 
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.CREATED) {
@@ -52,39 +50,13 @@ class CutOnActivity : AppCompatActivity() {
                         if (state != State.Available) {
                             dialogWithProgress()
                         } else {
-
                             if (this@CutOnActivity::dialog.isInitialized) {
                                 dialog.dismiss()
-                            }
-
-                            viewModel.getApiAddress(appName, v)
-
-                            viewModel.route.collect {
-                                when (it) {
-                                    is RouteState.Success -> {
-                                        // Login
-                                        viewModel.saveApiToSP(it.response)
-                                    }
-                                    is RouteState.Error -> {
-                                        // Main
-                                    }
-                                    is RouteState.Loading -> {
-                                        // Loading
-                                    }
-                                }
                             }
                         }
                     }
                 }
             }
-
-
-//            // Save App Name and Version
-//            viewModel.saveAppNameAndVersion(appName, v)
-//
-//            // Second init_api_address
-//            viewModel.saveSecondApiAddress(appName, v)
-
         }
 
         // Binding

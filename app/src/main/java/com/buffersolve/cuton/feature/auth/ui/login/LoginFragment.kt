@@ -42,7 +42,6 @@ class LoginFragment : Fragment() {
     ): View = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
 
         // Check token
@@ -57,8 +56,10 @@ class LoginFragment : Fragment() {
                     when (state) {
                         State.Available -> {
 
-//                            viewModel.getApiAddress(appName, v)
 
+
+//                            viewModel.getApiAddress(appName, v)
+//                            viewModel.
 
                         }
                         else -> {
@@ -71,6 +72,8 @@ class LoginFragment : Fragment() {
 
             }
         }
+
+        viewModel.getApiFromSP()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {

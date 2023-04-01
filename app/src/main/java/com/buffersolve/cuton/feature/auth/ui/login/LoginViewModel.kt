@@ -29,8 +29,8 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Flow
-    private val _networkState = MutableSharedFlow<State>(replay = 1)
-    val networkState: SharedFlow<State> = _networkState.asSharedFlow()
+    private val _networkState = MutableStateFlow(State.Unavailable)
+    val networkState = _networkState.asStateFlow()
 
     private val _apiState = MutableSharedFlow<ApiState>(replay = 1)
     val apiState: SharedFlow<ApiState> = _apiState.asSharedFlow()
@@ -64,6 +64,11 @@ class LoginViewModel @Inject constructor(
 //            }
 //        )
 //    }
+
+    fun getApiFromSP() = viewModelScope.launch {
+        val api = sessionManager.getApiAddress()
+        _apiState.emit(ApiState.Success(api))
+    }
 
 //    fun saveApiAddress(appName: String, v: Int) = viewModelScope.launch(Dispatchers.IO) {
 //        sessionManager.saveApiAddress(route)

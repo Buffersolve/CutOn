@@ -29,7 +29,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @Named("auth")
+    @Named("authRetrofit")
     fun provideAuthRetrofit(
         networkConnectivityState: NetworkConnectivityState,
         sessionManager: SessionManager,
@@ -41,15 +41,6 @@ object NetworkModule {
         }
         return createRetrofit(sessionManager.getApiAddress(), okHttpClient).build()
 
-//        return if (sessionManager.getApiAddress().isNotEmpty()) {
-//            createRetrofit(sessionManager.getApiAddress(), okHttpClient).build()
-//        } else {
-//            createRetrofit(init_api_address, okHttpClient).build()
-//        }
-
-//        return createRetrofit(sessionManager.getApiAddress(), okHttpClient).build()
-//        return createRetrofit(sessionManager.getApiAddress(), okHttpClient).build()
-
     }
 
     @Provides
@@ -59,11 +50,7 @@ object NetworkModule {
         sessionManager: SessionManager,
         okHttpClient: OkHttpClient
     ): Retrofit {
-//        return if (sessionManager.getApiAddress().isNotEmpty()) {
         return createRetrofit(sessionManager.getApiAddress(), okHttpClient).build()
-//        } else {
-//            createRetrofit(init_api_address, okHttpClient).build()
-//        }
     }
 
     @Provides
@@ -73,13 +60,6 @@ object NetworkModule {
         sessionManager: SessionManager,
         okHttpClient: OkHttpClient
     ): Retrofit {
-//        return if (sessionManager.getApiAddress().isNotEmpty()) {
-//            createRetrofit(sessionManager.getApiAddress(), okHttpClient).build()
-//        } else {
-//            createRetrofit(init_api_address, okHttpClient).build()
-//        }
-
-
         return createRetrofit(sessionManager.getApiAddress(), okHttpClient).build()
 
     }
@@ -91,11 +71,6 @@ object NetworkModule {
         sessionManager: SessionManager,
         okHttpClient: OkHttpClient
     ): Retrofit {
-//        return if (sessionManager.getApiAddress().isNotEmpty()) {
-//            createRetrofit(sessionManager.getApiAddress(), okHttpClient).build()
-//        } else {
-//            createRetrofit(init_api_address, okHttpClient).build()
-//        }
         return createRetrofit(sessionManager.getApiAddress(), okHttpClient).build()
     }
 
