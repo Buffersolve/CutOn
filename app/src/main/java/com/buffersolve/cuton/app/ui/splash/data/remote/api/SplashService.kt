@@ -4,9 +4,10 @@ import com.buffersolve.cuton.app.ui.splash.data.remote.model.RouteModel
 import com.buffersolve.cuton.core.data.network.result.NetworkResult
 import retrofit2.Retrofit
 import javax.inject.Inject
+import javax.inject.Named
 
 class SplashService @Inject constructor(
-    private val retrofit: Retrofit
+    @Named("splashRetrofit") private val retrofit: Retrofit
 ) {
 
     private val splashApi: SplashApi by lazy {

@@ -13,16 +13,16 @@ class HomeRepository @Inject constructor(
     private val homeService: HomeService
 ) {
 
-    suspend fun getUserInfo() : NetworkResult<UserInfoResponseModel> {
+    suspend fun getUserInfo() : Result<UserInfoResponseModel?, Exception> {
         val response = homeService.getUserInfo()
-            .onFailure { return it }
+            ?.onFailure { return it }
 
         return Result.Success(response)
     }
 
-    suspend fun getHomeMenuItems() : NetworkResult<MenuItemResponseModel> {
+    suspend fun getHomeMenuItems() : Result<MenuItemResponseModel?, Exception> {
         val response = homeService.getHomeMenuItems()
-            .onFailure { return it }
+            ?.onFailure { return it }
 
         return Result.Success(response)
     }

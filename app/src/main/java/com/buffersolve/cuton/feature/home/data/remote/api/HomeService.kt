@@ -5,6 +5,7 @@ import com.buffersolve.cuton.core.domain.SessionManager
 import com.buffersolve.cuton.feature.auth.data.remote.api.AuthApi
 import com.buffersolve.cuton.feature.home.data.remote.api.models.MenuItemResponseModel
 import com.buffersolve.cuton.feature.home.data.remote.api.models.UserInfoResponseModel
+import com.buffersolve.cuton.core.util.Result
 import retrofit2.Retrofit
 import javax.inject.Inject
 import javax.inject.Named
@@ -16,32 +17,19 @@ class HomeService @Inject constructor(
 
     private val homeApi: HomeApi by lazy { retrofit.create(HomeApi::class.java) }
 
-    suspend fun getUserInfo(): NetworkResult<UserInfoResponseModel> {
-
+    suspend fun getUserInfo(): NetworkResult<UserInfoResponseModel>? {
         // Get token from SP
         val token = sessionManager.getUserTokenOrNull()
+        // Request to server
+        return token?.let { homeApi.getUserInfo(it) }
 
-        if (token.isNullOrEmpty()) {
-            throw IllegalStateException("Token is null or empty")
-        } else {
-
-            // Request to server
-            return homeApi.getUserInfo(token)
-        }
     }
 
-    suspend fun getHomeMenuItems(): NetworkResult<MenuItemResponseModel> {
-
+    suspend fun getHomeMenuItems(): NetworkResult<MenuItemResponseModel>? {
         // Get token from SP
         val token = sessionManager.getUserTokenOrNull()
-
-        if (token.isNullOrEmpty()) {
-            throw IllegalStateException("Token is null or empty")
-        } else {
-
-            // Request to server
-            return homeApi.getHomeMenuItems(token)
-        }
+        // Request to server
+        return token?.let { homeApi.getHomeMenuItems(it) }
     }
 
 }

@@ -29,9 +29,6 @@ class AuthRepository @Inject constructor(
         // saveToken
         sessionManager.saveUserToken(loginResponse.token)
 
-        //Log
-//        sessionManager.getUserTokenOrNull()?.let { Log.d("CHECKTOKENRES", it) }
-
         return Result.Success(Unit)
     }
 

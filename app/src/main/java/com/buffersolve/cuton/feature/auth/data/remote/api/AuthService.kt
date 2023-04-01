@@ -1,6 +1,5 @@
 package com.buffersolve.cuton.feature.auth.data.remote.api
 
-import android.util.Log
 import com.buffersolve.cuton.core.data.network.result.NetworkResult
 import com.buffersolve.cuton.core.domain.SessionManager
 import com.buffersolve.cuton.feature.auth.data.remote.api.models.LoginModel
@@ -13,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class AuthService @Inject constructor(
-    @Named("auth") private val retrofit: Retrofit
+    @Named("authRetrofit") private val retrofit: Retrofit,
 ) {
 
     private val authApi: AuthApi by lazy { retrofit.create(AuthApi::class.java) }

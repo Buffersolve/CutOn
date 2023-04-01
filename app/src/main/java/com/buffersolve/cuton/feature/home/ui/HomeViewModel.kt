@@ -2,6 +2,7 @@ package com.buffersolve.cuton.feature.home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.buffersolve.cuton.core.domain.SessionManager
 import com.buffersolve.cuton.core.util.onResult
 import com.buffersolve.cuton.feature.home.data.repository.HomeRepository
 import com.buffersolve.cuton.feature.home.ui.state.ItemState
@@ -15,14 +16,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val sessionManager: SessionManager,
     private val repository: HomeRepository
 ): ViewModel() {
 
-//    private val _itemState = MutableSharedFlow<ItemState>(replay = 1)
-//    val itemState: SharedFlow<ItemState> = _itemState.asSharedFlow()
 
+    // Flow
     private val _itemState = MutableSharedFlow<ItemState>(replay = 1)
     val itemState: SharedFlow<ItemState> = _itemState.asSharedFlow()
+
+    fun getToken(): String? {
+        return sessionManager.getUserTokenOrNull()
+    }
 
     fun getUserInfo() = viewModelScope.launch(Dispatchers.IO) { repository.getUserInfo() }
 
@@ -33,7 +38,8 @@ class HomeViewModel @Inject constructor(
 
         repository.getHomeMenuItems().onResult(
             onSuccess = {
-                _itemState.emit(ItemState.Success(it.success))
+                it.success?.let { menu -> ItemState.Success(menu) }
+                    ?.let { state -> _itemState.emit(state) }
             },
             onFailure = {
                 _itemState.emit(ItemState.Error(it.cause.message.toString()))

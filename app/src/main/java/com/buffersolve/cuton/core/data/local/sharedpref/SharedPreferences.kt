@@ -43,13 +43,12 @@ class SharedPreferences @Inject constructor(
     }
 
     fun clearUserToken(): Boolean {
-        TODO("Not yet implemented")
+        return sharedPreferences.edit()
+            .remove(TOKEN_KEY)
+            .commit()
     }
 
-    /*
-    App Name and Version
-    */
-
+    // App Name and Version
     fun saveAppName(appName: String) {
         sharedPreferences.edit()
             .putString(APP_NAME, appName)
@@ -72,7 +71,7 @@ class SharedPreferences @Inject constructor(
     }
 
     companion object {
-        private const val api_address = "api_address"
+        private const val api_address = "API_ADDRESS"
 
         private const val SHARED_PREFERENCES = "SHARED_PREFERENCES"
         private const val TOKEN_KEY = "TOKEN_KEY"

@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.buffersolve.cuton.feature.auth.ui.login.LoginFragment"
         android:label="fragment_login"
+        app:popUpToInclusive="true"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/enter_anim"
             app:exitAnim="@anim/exit_anim"
             app:popEnterAnim="@anim/pop_enter_anim"
@@ -20,6 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
+        app:popUpToInclusive="true"
         android:name="com.buffersolve.cuton.feature.home.ui.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
@@ -30,10 +35,32 @@
             app:popEnterAnim="@anim/pop_enter_anim"
             app:popExitAnim="@anim/pop_exit_anim"
             app:destination="@id/catalogFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_logoutFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim"
+            app:destination="@id/logoutFragment" />
     </fragment>
     <fragment
         android:id="@+id/catalogFragment"
         android:name="com.buffersolve.cuton.feature.catalog.ui.CatalogFragment"
         android:label="fragment_catalog"
         tools:layout="@layout/fragment_catalog" />
+    <fragment
+        android:id="@+id/logoutFragment"
+        android:name="com.buffersolve.cuton.feature.logout.ui.LogoutFragment"
+        android:label="fragment_logout"
+        tools:layout="@layout/fragment_logout" >
+        <action
+            android:id="@+id/action_logoutFragment_to_loginFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>
