@@ -1,12 +1,11 @@
 <resources>
-    <string name="app_name">CutOn</string>
+    <string name="app_name" translatable="false">CutOn</string>
     <!-- TODO: Remove or change this placeholder text -->
 
     <string name="version_answer_0">You are using the latest version of the application</string>
     <string name="version_answer_1">There is a newer version of the application</string>
     <string name="version_answer_2">Your version of the app is out of date. Authorization is not possible</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="brand">Brand</string>
     <string name="brand_catalog">Brand Catalog</string>
     <string name="menu">Menu</string>

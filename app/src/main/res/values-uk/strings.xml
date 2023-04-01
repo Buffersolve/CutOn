@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="version_answer_0">Ви використовуєте найновішу версію додатку</string>
+    <string name="version_answer_1">Існує новіша версія додатку</string>
+    <string name="version_answer_2">Версія додатку застаріла. Авторизація неможлива</string>
+    <string name="brand">Бренд</string>
+    <string name="brand_catalog">Каталог Брендів</string>
+    <string name="menu">Меню</string>
+    <string name="login">Вхід</string>
+    <string name="telephone">Телефон</string>
+    <string name="password">Пароль</string>
+    <string name="want_to_exit_the_app">Бажаєте вийти з додатку?</string>
+    <string name="no">Ні</string>
+    <string name="yes">Так</string>
+</resources>

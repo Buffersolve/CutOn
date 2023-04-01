@@ -13,12 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import com.buffersolve.cuton.R
-import com.buffersolve.cuton.app.util.Configs.appName
-import com.buffersolve.cuton.app.util.Configs.v
-import com.buffersolve.cuton.core.data.local.SessionManagerImpl
-import com.buffersolve.cuton.core.data.local.sharedpref.SharedPreferences
-import com.buffersolve.cuton.core.domain.SessionManager
-import com.buffersolve.cuton.core.domain.State
 import com.buffersolve.cuton.databinding.FragmentLoginBinding
 import com.buffersolve.cuton.feature.auth.data.remote.api.models.LoginModel
 import com.buffersolve.cuton.feature.auth.ui.login.state.ApiState

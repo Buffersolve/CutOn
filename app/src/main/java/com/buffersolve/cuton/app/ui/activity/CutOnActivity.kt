@@ -2,7 +2,6 @@ package com.buffersolve.cuton.app.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.window.SplashScreen
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -10,16 +9,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.buffersolve.cuton.R
-import com.buffersolve.cuton.app.ui.activity.state.RouteState
 import com.buffersolve.cuton.app.util.Configs.appName
 import com.buffersolve.cuton.app.util.Configs.v
 import com.buffersolve.cuton.core.domain.State
 import com.buffersolve.cuton.databinding.ActivityCutonBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class CutOnActivity : AppCompatActivity() {
@@ -63,7 +59,6 @@ class CutOnActivity : AppCompatActivity() {
         binding = ActivityCutonBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
-
 
     }
 

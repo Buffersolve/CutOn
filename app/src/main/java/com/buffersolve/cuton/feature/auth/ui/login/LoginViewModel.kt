@@ -3,11 +3,8 @@ package com.buffersolve.cuton.feature.auth.ui.login
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.buffersolve.cuton.app.ui.splash.data.repository.SplashRepository
 import com.buffersolve.cuton.core.domain.AppInfoManager
-import com.buffersolve.cuton.core.domain.NetworkConnectivityState
 import com.buffersolve.cuton.core.domain.SessionManager
-import com.buffersolve.cuton.core.domain.State
 import com.buffersolve.cuton.core.util.onResult
 import com.buffersolve.cuton.feature.auth.data.remote.api.models.LoginModel
 import com.buffersolve.cuton.feature.auth.data.repository.AuthRepository
