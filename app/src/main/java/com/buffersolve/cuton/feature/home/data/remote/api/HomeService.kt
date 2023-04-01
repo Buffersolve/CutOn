@@ -18,32 +18,18 @@ class HomeService @Inject constructor(
     private val homeApi: HomeApi by lazy { retrofit.create(HomeApi::class.java) }
 
     suspend fun getUserInfo(): NetworkResult<UserInfoResponseModel>? {
-
         // Get token from SP
         val token = sessionManager.getUserTokenOrNull()
+        // Request to server
+        return token?.let { homeApi.getUserInfo(it) }
 
-//        if (token.isNullOrEmpty()) {
-//            throw IllegalStateException("Token is null or empty")
-//            return com.buffersolve.cuton.core.util.Result.Failure("Token is null or empty")
-//            return Result.Failure("Token is null or empty")
-//        } else {
-            // Request to server
-            return token?.let { homeApi.getUserInfo(it) }
-//        }
     }
 
     suspend fun getHomeMenuItems(): NetworkResult<MenuItemResponseModel>? {
-
         // Get token from SP
         val token = sessionManager.getUserTokenOrNull()
-
-//        if (token.isNullOrEmpty()) {
-//            throw IllegalStateException("Token is null or empty")
-//        } else {
-
-            // Request to server
-            return token?.let { homeApi.getHomeMenuItems(it) }
-//        }
+        // Request to server
+        return token?.let { homeApi.getHomeMenuItems(it) }
     }
 
 }

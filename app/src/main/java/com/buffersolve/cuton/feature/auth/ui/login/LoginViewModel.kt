@@ -21,17 +21,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val networkConnectivityState: NetworkConnectivityState,
     private val appInfoManager: AppInfoManager,
-    private val repository: SplashRepository, // TODO change to AuthRepository
     private val authRepository: AuthRepository,
     private val sessionManager: SessionManager
 ) : ViewModel() {
 
     // Flow
-    private val _networkState = MutableStateFlow(State.Unavailable)
-    val networkState = _networkState.asStateFlow()
-
     private val _apiState = MutableSharedFlow<ApiState>(replay = 1)
     val apiState: SharedFlow<ApiState> = _apiState.asSharedFlow()
 
@@ -45,34 +40,10 @@ class LoginViewModel @Inject constructor(
         return sessionManager.getUserTokenOrNull()
     }
 
-    fun connectivity() = viewModelScope.launch {
-        _networkState.emit(State.Unavailable)
-        networkConnectivityState.requestNetworkStatus().onEach {
-            _networkState.emit(it)
-        }.launchIn(scope = viewModelScope)
-    }
-
-//    fun getApiAddress(appName: String, v: Int) = viewModelScope.launch(Dispatchers.IO) {
-//        repository.getRoute(appName, v).onResult(
-//            onSuccess = {
-//                sessionManager.saveApiAddress(it.success.route)
-//                _apiState.emit(ApiState.Success(true))
-//            },
-//            onFailure = {
-//                _apiState.emit(ApiState.Error(it.cause.message.toString()))
-//
-//            }
-//        )
-//    }
-
     fun getApiFromSP() = viewModelScope.launch {
         val api = sessionManager.getApiAddress()
         _apiState.emit(ApiState.Success(api))
     }
-
-//    fun saveApiAddress(appName: String, v: Int) = viewModelScope.launch(Dispatchers.IO) {
-//        sessionManager.saveApiAddress(route)
-//    }
 
     fun appVersionValidate() = viewModelScope.launch(Dispatchers.IO) {
         val v = appInfoManager.getVersion()

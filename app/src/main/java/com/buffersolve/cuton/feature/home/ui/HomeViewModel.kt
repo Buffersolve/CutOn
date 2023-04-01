@@ -20,9 +20,8 @@ class HomeViewModel @Inject constructor(
     private val repository: HomeRepository
 ): ViewModel() {
 
-//    private val _itemState = MutableSharedFlow<ItemState>(replay = 1)
-//    val itemState: SharedFlow<ItemState> = _itemState.asSharedFlow()
 
+    // Flow
     private val _itemState = MutableSharedFlow<ItemState>(replay = 1)
     val itemState: SharedFlow<ItemState> = _itemState.asSharedFlow()
 
@@ -39,9 +38,8 @@ class HomeViewModel @Inject constructor(
 
         repository.getHomeMenuItems().onResult(
             onSuccess = {
-                // TODO IT
-                it.success?.let { it1 -> ItemState.Success(it1) }
-                    ?.let { it2 -> _itemState.emit(it2) }
+                it.success?.let { menu -> ItemState.Success(menu) }
+                    ?.let { state -> _itemState.emit(state) }
             },
             onFailure = {
                 _itemState.emit(ItemState.Error(it.cause.message.toString()))

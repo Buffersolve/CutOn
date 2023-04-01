@@ -47,32 +47,7 @@ class LoginFragment : Fragment() {
         // Check token
         checkToken()
 
-        // Check Network State
-        viewModel.connectivity()
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.networkState.collect { state ->
-                    when (state) {
-                        State.Available -> {
-
-
-
-//                            viewModel.getApiAddress(appName, v)
-//                            viewModel.
-
-                        }
-                        else -> {
-                            // nth
-                        }
-
-                    }
-
-                }
-
-            }
-        }
-
+        // Get Api Address
         viewModel.getApiFromSP()
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -86,8 +61,8 @@ class LoginFragment : Fragment() {
 
                         }
                         else -> {
-                            // nth
-//                            viewModel.appVersionValidate()
+                            // Snack bar Error
+                            snackBarError(apiState.toString())
                         }
 
                     }
@@ -171,11 +146,6 @@ class LoginFragment : Fragment() {
 
 
     }
-
-//    override fun onStart() {
-//        super.onStart()
-//        checkToken()
-//    }
 
     private fun dialogWithProgress(): AlertDialog {
         val dialogView =

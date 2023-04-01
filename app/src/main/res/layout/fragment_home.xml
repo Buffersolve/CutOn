@@ -24,16 +24,13 @@
             app:titleCentered="true"
             app:menu="@menu/tool_bar_menu" />
 
-<!--        android:animateLayoutChanges="true"-->
-<!--        app:layout_collapseMode="pin"-->
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:text="Menu"
+        android:text="@string/menu"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"
         app:layout_constraintStart_toStartOf="parent" />

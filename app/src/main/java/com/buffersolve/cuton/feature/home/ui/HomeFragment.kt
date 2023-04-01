@@ -39,9 +39,6 @@ class HomeFragment : Fragment() {
         // NavController
         navController = Navigation.findNavController(view)
 
-        // Check token
-//        checkToken()
-
         // Toolbar
         setupMenu()
 
@@ -61,9 +58,7 @@ class HomeFragment : Fragment() {
                         }
                         is ItemState.Success -> {
                             // Hide Loading
-//                            adapter.submitList(state.list)
                             with(binding) {
-
                                 // RV adapter
                                 recyclerView.adapter = adapter
                                 adapter.list = listOf(state.answer.items)
@@ -128,14 +123,5 @@ class HomeFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
     }
-
-//    private fun checkToken() {
-//        when(viewModel.getToken()) {
-//            null -> {
-//                navController.navigate(R.id.action_homeFragment_to_loginFragment)
-////                navController.popBackStack(R.id.loginFragment, true )
-//            }
-//        }
-//    }
 
 }

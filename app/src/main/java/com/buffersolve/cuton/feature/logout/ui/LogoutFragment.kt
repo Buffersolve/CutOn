@@ -47,9 +47,10 @@ class LogoutFragment : Fragment() {
                                 is LogoutState.Success -> {
                                     // Hide Loading
                                     viewModel.deleteToken()
+
+                                    // Navigate to Login
                                     Navigation.findNavController(it)
                                         .navigate(R.id.action_logoutFragment_to_loginFragment)
-                                    // Show Success Message
 
                                 }
                                 else -> {

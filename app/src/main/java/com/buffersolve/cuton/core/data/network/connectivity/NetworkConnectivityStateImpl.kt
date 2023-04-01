@@ -39,9 +39,6 @@ class NetworkConnectivityStateImpl @Inject constructor(
                     trySend(State.Losing).isSuccess
                 }
 
-//                override fun onBlockedStatusChanged(network: Network, blocked: Boolean) {
-//                    trySend(State.Unavailable).isSuccess
-//                }
             }
 
             val request = NetworkRequest.Builder()
