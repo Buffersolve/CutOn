@@ -27,7 +27,7 @@ class SessionManagerImpl @Inject constructor(
     }
 
     override fun clearUserToken(): Boolean {
-        TODO("Not yet implemented")
+        return sharedPreferences.clearUserToken()
     }
 
 }

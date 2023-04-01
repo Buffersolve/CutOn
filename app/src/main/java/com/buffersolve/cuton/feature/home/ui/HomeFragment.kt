@@ -5,13 +5,13 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.buffersolve.cuton.R
 import com.buffersolve.cuton.databinding.FragmentHomeBinding
@@ -26,6 +26,7 @@ class HomeFragment : Fragment() {
     private val binding: FragmentHomeBinding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
     private val adapter by lazy { HomeAdapter() }
     private val viewModel: HomeViewModel by viewModels()
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +35,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // NavController
+        navController = Navigation.findNavController(view)
+
+        // Check token
+//        checkToken()
 
         // Toolbar
         setupMenu()
@@ -79,7 +86,6 @@ class HomeFragment : Fragment() {
         adapter.setOnItemClickListener {
 
             // Navigate to CatalogFragment
-            val navController = Navigation.findNavController(view)
             navController.navigate(
                 R.id.action_homeFragment_to_catalogFragment
             )
@@ -91,14 +97,7 @@ class HomeFragment : Fragment() {
     // Toolbar
     private fun setupMenu() {
 
-        // Left button
         val toolbar = binding.topAppBar
-        toolbar.setNavigationOnClickListener {
-            Log.d("onMenuItemSelected", "onMenuItemSelected: ")
-
-        }
-
-        // Right button
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
 
@@ -108,9 +107,18 @@ class HomeFragment : Fragment() {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
+                    // Right button
                     R.id.app_bar_user -> {
                         // User Info
                         viewModel.getUserInfo()
+                        true
+                    }
+
+                    // Left button
+                    android.R.id.home -> {
+                        navController.navigate(
+                            R.id.action_homeFragment_to_logoutFragment
+                        )
                         true
                     }
                     else -> false
@@ -120,5 +128,14 @@ class HomeFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
     }
+
+//    private fun checkToken() {
+//        when(viewModel.getToken()) {
+//            null -> {
+//                navController.navigate(R.id.action_homeFragment_to_loginFragment)
+////                navController.popBackStack(R.id.loginFragment, true )
+//            }
+//        }
+//    }
 
 }

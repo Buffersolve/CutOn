@@ -6,10 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.buffersolve.cuton.app.ui.splash.data.repository.SplashRepository
 import com.buffersolve.cuton.core.domain.AppInfoManager
 import com.buffersolve.cuton.core.domain.NetworkConnectivityState
+import com.buffersolve.cuton.core.domain.SessionManager
 import com.buffersolve.cuton.core.domain.State
 import com.buffersolve.cuton.core.util.onResult
 import com.buffersolve.cuton.feature.auth.data.remote.api.models.LoginModel
 import com.buffersolve.cuton.feature.auth.data.repository.AuthRepository
+import com.buffersolve.cuton.feature.auth.ui.login.state.ApiState
 import com.buffersolve.cuton.feature.auth.ui.login.state.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,17 +25,25 @@ class LoginViewModel @Inject constructor(
     private val appInfoManager: AppInfoManager,
     private val repository: SplashRepository, // TODO change to AuthRepository
     private val authRepository: AuthRepository,
+    private val sessionManager: SessionManager
 ) : ViewModel() {
 
     // Flow
     private val _networkState = MutableSharedFlow<State>(replay = 1)
     val networkState: SharedFlow<State> = _networkState.asSharedFlow()
 
+    private val _apiState = MutableSharedFlow<ApiState>(replay = 1)
+    val apiState: SharedFlow<ApiState> = _apiState.asSharedFlow()
+
     private val _versionState = MutableSharedFlow<Int>(replay = 1)
     val versionState: SharedFlow<Int> = _versionState.asSharedFlow()
 
     private val _loginState = MutableSharedFlow<LoginState>(replay = 1)
     val loginState: SharedFlow<LoginState> = _loginState.asSharedFlow()
+
+    fun getToken(): String? {
+        return sessionManager.getUserTokenOrNull()
+    }
 
     fun connectivity() = viewModelScope.launch {
         _networkState.emit(State.Unavailable)
@@ -42,9 +52,22 @@ class LoginViewModel @Inject constructor(
         }.launchIn(scope = viewModelScope)
     }
 
-    fun saveSecondApiAddress(appName: String, v: Int) = viewModelScope.launch(Dispatchers.IO) {
-        repository.getRoute(appName, v)
-    }
+//    fun getApiAddress(appName: String, v: Int) = viewModelScope.launch(Dispatchers.IO) {
+//        repository.getRoute(appName, v).onResult(
+//            onSuccess = {
+//                sessionManager.saveApiAddress(it.success.route)
+//                _apiState.emit(ApiState.Success(true))
+//            },
+//            onFailure = {
+//                _apiState.emit(ApiState.Error(it.cause.message.toString()))
+//
+//            }
+//        )
+//    }
+
+//    fun saveApiAddress(appName: String, v: Int) = viewModelScope.launch(Dispatchers.IO) {
+//        sessionManager.saveApiAddress(route)
+//    }
 
     fun appVersionValidate() = viewModelScope.launch(Dispatchers.IO) {
         val v = appInfoManager.getVersion()

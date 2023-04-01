@@ -43,7 +43,9 @@ class SharedPreferences @Inject constructor(
     }
 
     fun clearUserToken(): Boolean {
-        TODO("Not yet implemented")
+        return sharedPreferences.edit()
+            .remove(TOKEN_KEY)
+            .commit()
     }
 
     /*

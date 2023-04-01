@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.buffersolve.cuton.R
+import com.buffersolve.cuton.app.ui.activity.state.RouteState
 import com.buffersolve.cuton.app.util.Configs.appName
 import com.buffersolve.cuton.app.util.Configs.v
 import com.buffersolve.cuton.core.domain.State
@@ -16,6 +17,7 @@ import com.buffersolve.cuton.databinding.ActivityCutonBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class CutOnActivity : AppCompatActivity() {
@@ -31,11 +33,15 @@ class CutOnActivity : AppCompatActivity() {
         // Save App Name and Version
         viewModel.saveAppNameAndVersion(appName, v)
 
-//        // Second api_address
+//        // Second init_api_address
 //        viewModel.saveSecondApiAddress(appName, v)
 
+        // init_api_address
+//        viewModel.getApiAddress(appName, v)
+
+
         // Check Network State
-        viewModel.connectivity()
+//        viewModel.connectivity()
 
         // Splash Screen
         installSplashScreen().apply {
@@ -46,8 +52,26 @@ class CutOnActivity : AppCompatActivity() {
                         if (state != State.Available) {
                             dialogWithProgress()
                         } else {
+
                             if (this@CutOnActivity::dialog.isInitialized) {
                                 dialog.dismiss()
+                            }
+
+                            viewModel.getApiAddress(appName, v)
+
+                            viewModel.route.collect {
+                                when (it) {
+                                    is RouteState.Success -> {
+                                        // Login
+                                        viewModel.saveApiToSP(it.response)
+                                    }
+                                    is RouteState.Error -> {
+                                        // Main
+                                    }
+                                    is RouteState.Loading -> {
+                                        // Loading
+                                    }
+                                }
                             }
                         }
                     }
@@ -55,11 +79,10 @@ class CutOnActivity : AppCompatActivity() {
             }
 
 
-
 //            // Save App Name and Version
 //            viewModel.saveAppNameAndVersion(appName, v)
 //
-//            // Second api_address
+//            // Second init_api_address
 //            viewModel.saveSecondApiAddress(appName, v)
 
         }

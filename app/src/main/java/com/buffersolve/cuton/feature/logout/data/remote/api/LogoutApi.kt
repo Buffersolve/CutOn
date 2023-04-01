@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface LogoutApi {
 
-    @DELETE
+    @DELETE("users/")
     suspend fun logout(
 
         @Query("token") token: String
